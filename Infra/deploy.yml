@@ -1,0 +1,34 @@
+---
+- name: Deploy Scientific Calculator Docker Container
+  hosts: local
+  become: yes # Run with root privileges, necessary for docker commands
+
+  vars:
+    # IMPORTANT: The image name MUST match the one defined in your Jenkinsfile
+    app_image: "aayushbhargav/scientific-calculator:latest"
+    container_name: "scientific_calculator_app"
+
+  tasks:
+    - name: Ensure Docker is installed (if needed)
+      package:
+        name: docker.io
+        state: present
+
+    - name: Stop and remove existing container (if running)
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        state: absent
+      ignore_errors: yes # Ignore errors if the container doesn't exist yet
+
+    - name: Pull the latest Docker image from Docker Hub
+      community.docker.docker_image:
+        name: "{{ app_image }}"
+        source: pull
+
+    - name: Run the new container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ app_image }}"
+        state: started
+        # This app is command-line only, so no port mapping is strictly needed,
+        # but the container should start and execute the Main class.
