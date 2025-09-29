@@ -1,0 +1,79 @@
+pipeline {
+    agent any
+
+    // Define environment variables for Docker Hub login and image naming
+    environment {
+        // NOTE: You must create a 'Username and password' type credential in Jenkins
+        // with the ID 'dockerhub_credentials' using your Docker Hub login.
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub_credentials')
+
+        DOCKER_IMAGE = "aayushbhargav/scientific-calculator" // Change to YOUR Docker Hub username
+        DOCKER_TAG = "latest"
+
+        // Define Maven's target JAR name based on your pom.xml artifactId and version
+        JAR_FILE = "target/scientific-calculator-project-1.0-SNAPSHOT.jar"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Change this URL to YOUR specific GitHub repository URL
+                git 'https://github.com/Aayush-Bhargav/SPE_MiniProject.git'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Executing Maven test goal
+                sh 'mvn test'
+            }
+        }
+
+        stage('Build JAR') {
+            steps {
+                // Executing Maven clean and package goals to create the executable JAR
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                // Build the Docker image using the Dockerfile located in the root context
+                sh """
+                docker build -t $DOCKER_IMAGE:$DOCKER_TAG .
+                """
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                sh """
+                // Secure login to Docker Hub using stored credentials
+                echo "$DOCKERHUB_CREDENTIALS_PSW" | docker login -u "$DOCKERHUB_CREDENTIALS_USR" --password-stdin
+
+                // Push the image
+                docker push $DOCKER_IMAGE:$DOCKER_TAG
+
+                // Log out for security
+                docker logout
+                """
+            }
+        }
+
+        stage('Deploy with Ansible') {
+            steps {
+                // Execute the Ansible playbook to pull and run the container locally
+                sh """
+                ansible-playbook -i infra/hosts infra/deploy.yml
+                """
+            }
+        }
+    }
+
+    post {
+        always {
+            // This runs regardless of success/failure
+            echo "Pipeline finished. Check status for success/failure."
+        }
+    }
+}
