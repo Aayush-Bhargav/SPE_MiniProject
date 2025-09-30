@@ -2,7 +2,7 @@
 - name: Deploy Scientific Calculator Docker Container
   hosts: local
   # This requires the 'jenkins' user to have NOPASSWD access in /etc/sudoers
-  # to run Docker commands as root
+  # to run Docker commands as root (unless jenkins user is in the 'docker' group)
   become: yes
 
   vars:
@@ -11,15 +11,17 @@
     container_name: "scientific_calculator_app"
 
   tasks:
-    # Use the 'apt' module to install the Python Docker module to avoid  the 'externally-managed-environment' error when using pip system-wide.
-    - name: Ensure Python Docker module is installed (via apt)
-      ansible.builtin.apt:
-        name: python3-docker # This is the package name for the python docker module on Debian/Ubuntu
+    # FIX: Switching back to pip, using the 'ansible.builtin.pip' module with
+    # the 'extra_args' flag to bypass the externally-managed-environment error
+    # on modern Linux distributions. This is the cleanest fix for CI systems.
+    - name: Ensure Python Docker module is installed (via pip bypass)
+      ansible.builtin.pip:
+        name: docker
         state: present
-        update_cache: yes
-      when: ansible_os_family == "Debian" # Only run on Debian/Ubuntu systems
+        executable: pip3
+        extra_args: "--break-system-packages" # Flag to override PEP 668 restriction
       # This task requires elevated privileges (become: yes)
-
+      # No 'when' condition needed as this fix is generally system-agnostic for CI
 
     - name: Stop and remove existing container (if running)
       # Use the fully qualified collection name for the docker_container module
