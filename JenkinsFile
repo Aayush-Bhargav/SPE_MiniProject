@@ -65,7 +65,7 @@ pipeline {
             steps {
                 // Execute the Ansible playbook to pull and run the container locally
                 sh """
-                ansible-playbook -i infra/hosts infra/deploy.yml
+                ansible-playbook -i Infra/hosts Infra/deploy.yml
                 """
             }
         }
