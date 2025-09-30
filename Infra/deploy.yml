@@ -5,7 +5,7 @@
 
   vars:
     # IMPORTANT: The image name MUST match the one defined in your Jenkinsfile
-    app_image: "aayushbhargav/scientific-calculator:latest"
+    app_image: "aayushbhargav57/scientific-calculator:latest"
     container_name: "scientific_calculator_app"
 
   tasks:

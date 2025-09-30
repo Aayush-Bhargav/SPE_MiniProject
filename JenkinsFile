@@ -7,7 +7,7 @@ pipeline {
         // with the ID 'dockerhub_credentials' using your Docker Hub login.
         DOCKERHUB_CREDENTIALS = credentials('dockerhub_credentials')
 
-        DOCKER_IMAGE = "aayushbhargav/scientific-calculator" // Change to YOUR Docker Hub username
+        DOCKER_IMAGE = "aayushbhargav57/scientific-calculator" // Change to YOUR Docker Hub username
         DOCKER_TAG = "latest"
 
         // Define Maven's target JAR name based on your pom.xml artifactId and version
