@@ -17,8 +17,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Change this URL to YOUR specific GitHub repository URL
-                git 'https://github.com/Aayush-Bhargav/SPE_MiniProject.git'
+                // *** FIX: Explicitly specify the branch to be 'main' ***
+                git branch: 'main', url: 'https://github.com/Aayush-Bhargav/SPE_MiniProject.git'
             }
         }
 
