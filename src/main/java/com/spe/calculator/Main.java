@@ -15,22 +15,28 @@ public class Main {
         System.out.println("Welcome to the Scientific Calculator!");
         int choice;
 
-        do {
+//        do {
             displayMenu();
-            choice = getIntInput("Enter your choice (1-5): ");
-
             try {
-                processChoice(choice);
-            } catch (InputMismatchException e) {
-                System.out.println("ERROR: Invalid input type. Please enter a number.");
-                scanner.next(); // Clear the invalid input
-            } catch (IllegalArgumentException | FactorialOverflowException e) {
-                System.out.println("CALCULATION ERROR: " + e.getMessage());
+                long testResult = calculator.factorial(5); // Calculate 5!
+                System.out.println("\nCI/CD Test: Factorial of 5 is: " + testResult);
             } catch (Exception e) {
-                System.out.println("An unexpected error occurred: " + e.getMessage());
+                System.out.println("CI/CD Test Failed: " + e.getMessage());
             }
+//            choice = getIntInput("Enter your choice (1-5): ");
+//
+//            try {
+//                processChoice(choice);
+//            } catch (InputMismatchException e) {
+//                System.out.println("ERROR: Invalid input type. Please enter a number.");
+//                scanner.next(); // Clear the invalid input
+//            } catch (IllegalArgumentException | FactorialOverflowException e) {
+//                System.out.println("CALCULATION ERROR: " + e.getMessage());
+//            } catch (Exception e) {
+//                System.out.println("An unexpected error occurred: " + e.getMessage());
+//            }
 
-        } while (choice != 5);
+//        } while (choice != 5);
 
         System.out.println("Thank you for using the Scientific Calculator. Goodbye!");
     }
