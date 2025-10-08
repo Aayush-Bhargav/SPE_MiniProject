@@ -9,7 +9,7 @@ pipeline {
 
         DOCKER_IMAGE = "aayushbhargav57/scientific-calculator" // Change to YOUR Docker Hub username
         DOCKER_TAG = "latest"
-
+        EMAIL_ID = "aayushbhargav0507@gmail.com"
         // Define Maven's target JAR name based on your pom.xml artifactId and version
         JAR_FILE = "target/scientific-calculator-project-1.0-SNAPSHOT.jar"
     }
@@ -72,6 +72,20 @@ pipeline {
     }
 
     post {
+        success {
+                mail bcc: '',
+                     body: "SUCCESS: The Scientific Calculator CI/CD Pipeline (Build ${BUILD_NUMBER}) passed all tests and deployed the image to Docker Hub and localhost.",
+                     from: '',
+                     subject: "Pipeline SUCCESS: Scientific Calculator Build #${BUILD_NUMBER}",
+                     to: "${EMAIL_ID}"
+            }
+            failure {
+                mail bcc: '',
+                     body: "FAILURE: The Scientific Calculator CI/CD Pipeline (Build ${BUILD_NUMBER}) failed during execution. Check Jenkins console for details.",
+                     from: '',
+                     subject: "Pipeline FAILURE: Scientific Calculator Build #${BUILD_NUMBER}",
+                     to: "${EMAIL_ID}"
+            }
         always {
             // This runs regardless of success/failure
             echo "Pipeline finished. Check status for success/failure."
