@@ -75,6 +75,8 @@ pipeline {
         always {
             // This runs regardless of success/failure
             echo "Pipeline finished. Check status for success/failure."
+            echo "Cleaning workspace..."
+            cleanWs()
         }
     }
 }

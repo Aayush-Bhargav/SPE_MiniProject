@@ -41,6 +41,7 @@
         image: "{{ app_image }}"
         state: started
         # Detach the container so the Jenkins job can finish
+        interactive: true
         detach: true
         # The app is command-line only; it will run the entrypoint (Main class)
         # and exit after execution unless in an interactive environment.
