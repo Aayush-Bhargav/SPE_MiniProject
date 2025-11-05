@@ -1,5 +1,5 @@
 # Use a lightweight official Java Runtime Environment (JRE) as the base image
-FROM openjdk:26-slim
+FROM ibmjava:latest
 
 # Set the working directory inside the container
 WORKDIR /app
