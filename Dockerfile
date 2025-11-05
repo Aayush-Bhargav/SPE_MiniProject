@@ -1,5 +1,5 @@
 # Use a lightweight official Java Runtime Environment (JRE) as the base image
-FROM ibmjava:latest
+FROM eclipse-temurin:8u462-b08-jdk
 
 # Set the working directory inside the container
 WORKDIR /app
