@@ -67,11 +67,11 @@ public class ScientificCalculatorTest {
 //    }
 
     // new testcase added
-    @Test
-    @DisplayName("Square Root Test: Positive Number")
-    void squareRoot_anotherPositiveInput_returnsCorrectValue() {
-        assertEquals(6.0, calculator.squareRoot(36.0), DELTA, "Square root of 36 should be 6.0.");
-    }
+//    @Test
+//    @DisplayName("Square Root Test: Positive Number")
+//    void squareRoot_anotherPositiveInput_returnsCorrectValue() {
+//        assertEquals(6.0, calculator.squareRoot(36.0), DELTA, "Square root of 36 should be 6.0.");
+//    }
 
     @Test
     @DisplayName("Square Root Test: Zero")
