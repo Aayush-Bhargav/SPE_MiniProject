@@ -15,12 +15,12 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // *** FIX: Explicitly specify the branch to be 'main' ***
-                git branch: 'main', url: 'https://github.com/Aayush-Bhargav/SPE_MiniProject.git'
-            }
-        }
+//         stage('Checkout') {
+//             steps {
+//                 // *** FIX: Explicitly specify the branch to be 'main' ***
+//                 git branch: 'main', url: 'https://github.com/Aayush-Bhargav/SPE_MiniProject.git'
+//             }
+//         }
 
         stage('Test') {
             steps {
